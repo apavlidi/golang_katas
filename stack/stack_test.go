@@ -47,3 +47,13 @@ func TestPushAndPopMultipleItems(t *testing.T) {
 	assert.Equal(t, 2, item2)
 	assert.Equal(t, stack.Size(), 3)
 }
+
+func TestPeek(t *testing.T) {
+	stack := Stack{}
+	stack.push(1)
+	stack.push(5)
+	stack.push(23)
+	item := stack.peek()
+	assert.Equal(t, stack.Size(), 3)
+	assert.Equal(t, item, 23)
+}

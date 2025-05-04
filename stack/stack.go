@@ -22,3 +22,8 @@ func (s *Stack) pop() int {
 func (s *Stack) IsEmpty() bool {
 	return len(s.elements) == 0
 }
+
+func (s *Stack) peek() int {
+	item := s.elements[:len(s.elements)]
+	return item[0]
+}
