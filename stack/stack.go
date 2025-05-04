@@ -18,3 +18,7 @@ func (s *Stack) pop() int {
 	s.elements = append(s.elements[1:], s.elements[:0]...)
 	return item[0]
 }
+
+func (s *Stack) IsEmpty() bool {
+	return len(s.elements) == 0
+}

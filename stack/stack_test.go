@@ -7,6 +7,16 @@ import (
 
 func TestIsEmpty(t *testing.T) {
 	stack := Stack{}
+	assert.Equal(t, stack.IsEmpty(), true)
+}
+
+func TestIsNotEmpty(t *testing.T) {
+	stack := Stack{elements: make([]int, 1)}
+	assert.Equal(t, stack.IsEmpty(), false)
+}
+
+func TestSize(t *testing.T) {
+	stack := Stack{}
 	assert.Equal(t, stack.Size(), 0)
 }
 
