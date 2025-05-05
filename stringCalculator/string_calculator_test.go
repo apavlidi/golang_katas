@@ -18,6 +18,7 @@ func TestStringCalculator(t *testing.T) {
 		{"Add multiple characters 1,2", "1,2", 3},
 		{"Multiple Separators", "1\n2,3", 6},
 		{"Custom separators", "//;\n1;2;4", 7},
+		{"Big numbers separators", "//;\n1;2;4,1001", 7},
 	}
 
 	for _, tc := range tests {

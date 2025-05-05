@@ -31,20 +31,37 @@ func StringCalculator(s string) (int, error) {
 func sumInts(s []string) (int, error) {
 	sum := 0
 	for _, val := range s {
-		num, err := strconv.Atoi(val)
-		if num < 0 {
-			return -1, &NotAllowedNegativeNumbers{
-				Input: num,
-				Msg:   "Negative values are not allowed",
-			}
-		}
+		number, err := parseNumber(val)
 		if err != nil {
 			return -1, err
 		}
-		sum += num
+		sum += number
 	}
 
 	return sum, nil
+}
+
+func parseNumber(s string) (int, error) {
+	num, err := strconv.Atoi(s)
+	if err != nil {
+		return -1, err
+	}
+
+	if num < 0 {
+		return -1, &NotAllowedNegativeNumbers{
+			Input: num,
+			Msg:   "Negative values are not allowed",
+		}
+	}
+
+	if isBigNumber(num) {
+		return 0, nil
+	}
+	return num, nil
+}
+
+func isBigNumber(num int) bool {
+	return num > 1000
 }
 
 func getCustomSeparator(s string) string {
