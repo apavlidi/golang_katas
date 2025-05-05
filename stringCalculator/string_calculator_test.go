@@ -1,6 +1,7 @@
 package stringCalculator
 
 import (
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
@@ -29,5 +30,14 @@ func TestStringCalculator(t *testing.T) {
 func TestStringCalculatorInvalidChars(t *testing.T) {
 	actual, err := StringCalculator("1,2,s,5")
 	require.Error(t, err)
+	assert.Equal(t, -1, actual)
+}
+
+func TestStringCalculatorNegativeNumber(t *testing.T) {
+	actual, err := StringCalculator("1,2,3,-5")
+	require.Error(t, err)
+	var customErr *NotAllowedNegativeNumbers
+	ok := errors.As(err, &customErr)
+	assert.True(t, ok, "error should be of type NotAllowedNegativeNumbers")
 	assert.Equal(t, -1, actual)
 }
