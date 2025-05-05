@@ -12,21 +12,20 @@ func StringCalculator(s string) (int, error) {
 		return 0, nil
 	}
 
-	separator := makeSplitter(DefaultDelimiters)
 	customSeparator := getCustomSeparator(s)
 	if customSeparator != "" {
-		separator = makeSplitter(DefaultDelimiters + customSeparator)
 		s = strings.SplitAfter(s, "//")[1]
 	}
+	separator := makeSplitter(DefaultDelimiters + customSeparator)
 
 	split := strings.FieldsFunc(s, separator)
 	sum := 0
 	for _, val := range split {
-		atoi, err := strconv.Atoi(val)
+		num, err := strconv.Atoi(val)
 		if err != nil {
 			return -1, err
 		}
-		sum += atoi
+		sum += num
 	}
 
 	return sum, nil
