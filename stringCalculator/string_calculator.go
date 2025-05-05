@@ -10,7 +10,8 @@ func StringCalculator(s string) (int, error) {
 		return 0, nil
 	}
 
-	split := strings.Split(s, ",")
+	//split := strings.Split(s, ",")
+	split := strings.FieldsFunc(s, Split)
 	sum := 0
 	for _, val := range split {
 		atoi, err := strconv.Atoi(val)
@@ -21,4 +22,8 @@ func StringCalculator(s string) (int, error) {
 	}
 
 	return sum, nil
+}
+
+func Split(r rune) bool {
+	return r == ',' || r == '\n'
 }

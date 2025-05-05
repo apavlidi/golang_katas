@@ -15,6 +15,7 @@ func TestStringCalculator(t *testing.T) {
 		{"Add empty string", "", 0},
 		{"Add 1,2", "1,2", 3},
 		{"Add 4", "4", 4},
+		{"Add 1\n2,3", "1\n2,3", 6},
 	}
 
 	for _, tc := range tests {
