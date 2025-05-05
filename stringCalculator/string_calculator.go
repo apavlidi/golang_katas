@@ -19,8 +19,12 @@ func StringCalculator(s string) (int, error) {
 	separator := makeSplitter(DefaultDelimiters + customSeparator)
 
 	split := strings.FieldsFunc(s, separator)
+	return sumInts(split)
+}
+
+func sumInts(s []string) (int, error) {
 	sum := 0
-	for _, val := range split {
+	for _, val := range s {
 		num, err := strconv.Atoi(val)
 		if err != nil {
 			return -1, err
@@ -32,13 +36,8 @@ func StringCalculator(s string) (int, error) {
 }
 
 func getCustomSeparator(s string) string {
-	split := strings.Split(s, "")
-	if len(split) >= 2 {
-		e := []string{split[0], split[1]}
-		firstTwoCharacters := strings.Join(e, "")
-		if strings.Contains(firstTwoCharacters, "//") {
-			return split[2]
-		}
+	if strings.HasPrefix(s, "//") && len(s) >= 2 {
+		return string(s[2])
 	}
 	return ""
 }
@@ -47,8 +46,4 @@ func makeSplitter(delimiters string) func(rune) bool {
 	return func(r rune) bool {
 		return strings.ContainsRune(delimiters, r)
 	}
-}
-
-func defaultSplitter(r rune) func(rune) bool {
-	return makeSplitter(",\n")
 }
