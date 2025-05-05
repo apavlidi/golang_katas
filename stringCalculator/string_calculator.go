@@ -20,7 +20,11 @@ func StringCalculator(s string) (int, error) {
 
 	customSeparator := getCustomSeparator(s)
 	if customSeparator != "" {
-		s = strings.SplitAfter(s, "//")[1]
+		if len(customSeparator) > 1 {
+			s = strings.SplitAfter(s, "//["+customSeparator+"]")[1]
+		} else {
+			s = strings.SplitAfter(s, "//")[1]
+		}
 	}
 	separator := makeSplitter(DefaultDelimiters + customSeparator)
 
@@ -66,6 +70,13 @@ func isBigNumber(num int) bool {
 
 func getCustomSeparator(s string) string {
 	if strings.HasPrefix(s, "//") && len(s) >= 2 {
+		if strings.Contains(s, "[") && strings.Contains(s, "]") {
+			//[***]1***2***3
+			start := strings.Index(s, "[")
+			end := strings.Index(s, "]")
+			return s[start+1 : end]
+		}
+
 		return string(s[2])
 	}
 	return ""
