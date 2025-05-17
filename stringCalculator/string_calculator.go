@@ -70,16 +70,41 @@ func isBigNumber(num int) bool {
 
 func getCustomSeparator(s string) string {
 	if strings.HasPrefix(s, "//") && len(s) >= 2 {
-		if strings.Contains(s, "[") && strings.Contains(s, "]") {
-			//[***]1***2***3
-			start := strings.Index(s, "[")
-			end := strings.Index(s, "]")
-			return s[start+1 : end]
+		separator, hasArbitraryLengthSeparator := getArbitraryLengthSeparator(s)
+		if hasArbitraryLengthSeparator {
+			return separator
 		}
-
 		return string(s[2])
 	}
 	return ""
+}
+
+func getArbitraryLengthSeparator(s string) (string, bool) {
+	separator := ""
+	addToSeparator := false
+	if strings.Contains(s, "[") && strings.Contains(s, "]") {
+		for _, char := range s {
+			if char == '[' {
+				addToSeparator = true
+				continue
+			}
+
+			if char == ']' {
+				addToSeparator = false
+				continue
+			}
+
+			if addToSeparator {
+				separator += string(char)
+			}
+		}
+
+		//start := strings.Index(s, "[")
+		//end := strings.Index(s, "]")
+		//return s[start+1 : end], true
+		return separator, true
+	}
+	return separator, false
 }
 
 func makeSplitter(delimiters string) func(rune) bool {

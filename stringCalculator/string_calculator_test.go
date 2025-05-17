@@ -20,6 +20,7 @@ func TestStringCalculator(t *testing.T) {
 		{"Custom separators", "//;\n1;2;4", 7},
 		{"Big numbers separators", "//;\n1;2;4,1001", 7},
 		{"Arbitrary-length separators", "//[***]\n1***2***3", 6},
+		{"Multiple single-length separators", "//[*][%]\n1*2%3", 6},
 	}
 
 	for _, tc := range tests {
