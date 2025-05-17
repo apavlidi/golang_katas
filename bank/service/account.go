@@ -25,5 +25,5 @@ func (acc *PersonalAccount) Withdraw(amount int) {
 }
 
 func (acc *PersonalAccount) PrintStatement() string {
-	return acc.Printer.PrintStatement()
+	return acc.Printer.PrintStatement(acc.Repository.GetAll())
 }
