@@ -21,7 +21,7 @@ func StringCalculator(s string) (int, error) {
 	customSeparator := getCustomSeparator(s)
 	if customSeparator != "" {
 		if len(customSeparator) > 1 {
-			s = strings.SplitAfter(s, "//["+customSeparator+"]")[1]
+			s = strings.SplitAfter(s, "//"+customSeparator+"")[1]
 		} else {
 			s = strings.SplitAfter(s, "//")[1]
 		}
@@ -82,29 +82,30 @@ func getCustomSeparator(s string) string {
 func getArbitraryLengthSeparator(s string) (string, bool) {
 	separator := ""
 	addToSeparator := false
-	if strings.Contains(s, "[") && strings.Contains(s, "]") {
+	hasArbitraryLengthSeparator := false
+
+	for strings.Contains(s, "[") && strings.Contains(s, "]") {
 		for _, char := range s {
 			if char == '[' {
 				addToSeparator = true
-				continue
-			}
-
-			if char == ']' {
-				addToSeparator = false
-				continue
 			}
 
 			if addToSeparator {
 				separator += string(char)
+				_, after, _ := strings.Cut(s, "[")
+				_, after, _ = strings.Cut(after, "]")
+				s = after
+			}
+
+			if char == ']' {
+				addToSeparator = false
 			}
 		}
 
-		//start := strings.Index(s, "[")
-		//end := strings.Index(s, "]")
-		//return s[start+1 : end], true
-		return separator, true
+		hasArbitraryLengthSeparator = true
 	}
-	return separator, false
+
+	return separator, hasArbitraryLengthSeparator
 }
 
 func makeSplitter(delimiters string) func(rune) bool {
