@@ -1,5 +1,10 @@
 package service
 
+import (
+	"golang_katas/bank/repository"
+	"golang_katas/bank/ui"
+)
+
 type Account interface {
 	Deposit(amount int)
 	Withdraw(amount int)
@@ -7,16 +12,18 @@ type Account interface {
 }
 
 type PersonalAccount struct {
+	repository repository.AccountRepository
+	printer    ui.AccountPrinter
 }
 
 func (acc PersonalAccount) Deposit(amount int) {
-	panic("Not implemented")
+	acc.repository.Deposit(amount)
 }
 
 func (acc PersonalAccount) Withdraw(amount int) {
-	panic("Not implemented")
+	acc.repository.Withdraw(amount)
 }
 
 func (acc PersonalAccount) PrintStatement() string {
-	panic("Not implemented")
+	return acc.printer.PrintStatement()
 }
