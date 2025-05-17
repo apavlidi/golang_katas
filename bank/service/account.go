@@ -12,18 +12,18 @@ type Account interface {
 }
 
 type PersonalAccount struct {
-	repository repository.AccountRepository
-	printer    ui.AccountPrinter
+	Repository repository.AccountRepository
+	Printer    ui.AccountPrinter
 }
 
-func (acc PersonalAccount) Deposit(amount int) {
-	acc.repository.Deposit(amount)
+func (acc *PersonalAccount) Deposit(amount int) {
+	acc.Repository.Deposit(amount)
 }
 
-func (acc PersonalAccount) Withdraw(amount int) {
-	acc.repository.Withdraw(amount)
+func (acc *PersonalAccount) Withdraw(amount int) {
+	acc.Repository.Withdraw(amount)
 }
 
-func (acc PersonalAccount) PrintStatement() string {
-	return acc.printer.PrintStatement()
+func (acc *PersonalAccount) PrintStatement() string {
+	return acc.Printer.PrintStatement()
 }

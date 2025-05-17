@@ -1,14 +1,19 @@
 package bank
 
 import (
-	"awesomeProject2/bank/service"
 	"github.com/stretchr/testify/assert"
+	"golang_katas/bank/repository"
+	"golang_katas/bank/service"
+	"golang_katas/bank/ui"
 	"testing"
 )
 
 func TestAccount(t *testing.T) {
 
-	var acc service.Account = service.PersonalAccount{}
+	var acc service.Account = &service.PersonalAccount{
+		Repository: &repository.PersonalAccountRepository{},
+		Printer:    &ui.PersonalAccountPrinter{},
+	}
 
 	acc.Deposit(1000)
 	acc.Deposit(2000)

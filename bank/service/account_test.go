@@ -11,7 +11,7 @@ func TestServiceDeposit(t *testing.T) {
 	amount := 1000
 	mockRepo.On("Deposit", amount)
 
-	var acc Account = PersonalAccount{repository: mockRepo}
+	var acc Account = PersonalAccount{Repository: mockRepo}
 	acc.Deposit(amount)
 	mockRepo.AssertCalled(t, "Deposit", amount)
 }
@@ -21,7 +21,7 @@ func TestServiceWithdraw(t *testing.T) {
 	amount := 500
 	mockRepo.On("Withdraw", amount)
 
-	acc := PersonalAccount{repository: mockRepo}
+	acc := PersonalAccount{Repository: mockRepo}
 	acc.Withdraw(amount)
 	mockRepo.AssertCalled(t, "Withdraw", amount)
 }
@@ -32,7 +32,7 @@ func TestPrintStatement(t *testing.T) {
 	statement := "14/01/2012 || -500   || 2500"
 	mockPrinter.On("PrintStatement").Return(statement)
 
-	acc := PersonalAccount{repository: mockRepo, printer: mockPrinter}
+	acc := PersonalAccount{Repository: mockRepo, Printer: mockPrinter}
 	assert.Equal(t, statement, acc.PrintStatement())
 }
 
